@@ -44,6 +44,7 @@ public class Main extends Application {
         private int Size;
         private int Number;
         private int Step;
+        private int chet = 0;
         private RadioButton[] J6RadioButtons;
         private ToggleGroup ButtonGroup = new ToggleGroup();
 
@@ -57,6 +58,7 @@ public class Main extends Application {
             Size = quantity;
             Number = 0;
             Step = 1;
+            chet = 0;
         }
 
         private void Show(){
@@ -82,7 +84,6 @@ public class Main extends Application {
             Thread J6T = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    int chet = 0;
                     while(Work){
                         if(Step<=Size){
                             J6RadioButtons[Number].fire();
@@ -112,13 +113,10 @@ public class Main extends Application {
 
     }
 
-    @Override
-    public void start(Stage stage) {
-
+    public HBox root1 (){
         ComboBox<String> J1ComboBox = new ComboBox<String >();
         TextField J1TextField = new TextField();
-        Button J1Button = new Button("J1Button");
-        J1Button.setText("Add_Text");
+        Button J1Button = new Button("Add text");
         J1Button.setOnAction(e -> {
             String text = J1TextField.getText();
             int x=1;
@@ -139,10 +137,14 @@ public class Main extends Application {
                 J1ComboBox.getItems().addAll(text);
             }
         });
+        HBox root = new HBox(J1Button, J1TextField, J1ComboBox);
+        return root;
+    }
 
+    public HBox root2(){
         TextField J2TextField = new TextField();
-        Button J2Button1 = new Button("J2Button1");
-        Button J2Button2 = new Button("J2Button2");
+        Button J2Button1 = new Button("Set text on second button");
+        Button J2Button2 = new Button("Change text on first button");
         J2Button1.setOnAction(e -> {
             J2Button2.setText(J2TextField.getText());
         });
@@ -151,9 +153,13 @@ public class Main extends Application {
             J2Button2.setText(J2Button1.getText());
             J2Button1.setText(JText1);
         });
+        HBox root = new HBox(J2Button1, J2TextField, J2Button2);
+        return root;
+    }
 
+    public HBox root3(){
         TextField J3TextField = new TextField();
-        Button J3Button = new Button("J3Button");
+        Button J3Button = new Button("On/Off named Radio Button");
         ToggleGroup J3RadioButtonGroup = new ToggleGroup();
         RadioButton J3RadioButton1 = new RadioButton("1");
         J3RadioButton1.setToggleGroup(J3RadioButtonGroup);
@@ -185,9 +191,13 @@ public class Main extends Application {
                 alert.showAndWait();
             }
         });
+        HBox root = new HBox(J3TextField, J3Button, J3RadioButton1, J3RadioButton2, J3RadioButton3);
+        return root;
+    }
 
+    public HBox root4(){
         TextField J4TextField = new TextField();
-        Button J4Button = new Button("J4Button");
+        Button J4Button = new Button("On/Off named Check box");
         CheckBox J4CheckBox1 = new CheckBox("1");
         CheckBox J4CheckBox2 = new CheckBox("2");
         CheckBox J4CheckBox3 = new CheckBox("3");
@@ -215,7 +225,11 @@ public class Main extends Application {
                 alert.showAndWait();
             }
         });
+        HBox root = new HBox(J4TextField, J4Button, J4CheckBox1, J4CheckBox2, J4CheckBox3);
+        return root;
+    }
 
+    public HBox root5(){
         ObservableList<Table> NewList = FXCollections.observableArrayList();
         TableView<Table> J5Table = new TableView<Table>();
         TableColumn<Table, String> J5Column1 = new TableColumn<>("First column");
@@ -225,9 +239,9 @@ public class Main extends Application {
         J5Table.setItems(NewList);
         J5Table.getColumns().addAll(J5Column1, J5Column2);
         TextField J5TextField = new TextField();
-        Button J5Button1 = new Button("J5Button1");
-        Button J5Button2 = new Button("J5Button2");
-        Button J5Button3 = new Button("J5Button3");
+        Button J5Button1 = new Button("Set text to first column");
+        Button J5Button2 = new Button("Send text to second column");
+        Button J5Button3 = new Button("send text to fist column");
         J5Button1.setOnAction(e->{
             NewList.add(new Table(J5TextField.getText(), ""));
         });
@@ -251,11 +265,15 @@ public class Main extends Application {
         J5Table.setPrefHeight(150);
         J5Table.setLayoutY(40);
         J5Table.setLayoutX(60);
+        HBox root = new HBox(J5TextField, J5Button1, J5Button2, J5Button3, J5Table);
+        return root;
+    }
 
+    public HBox root6(){
         TextField J6TextField = new TextField();
-        Button J6Button1 = new Button("J6Button1");
-        Button J6Button2 = new Button("J6Button2");
-        Button J6Button3 = new Button("J6Button3");
+        Button J6Button1 = new Button("Set quantity of radio buttons");
+        Button J6Button2 = new Button("Start");
+        Button J6Button3 = new Button("Pause");
         Cycle J6Cycle = new Cycle();
         J6Button1.setOnAction(e->{
             J6Cycle.WorkOff();
@@ -269,15 +287,14 @@ public class Main extends Application {
         J6Button3.setOnAction(e->{
             J6Cycle.WorkOff();
         });
+        HBox root = new HBox(J6TextField, J6Button1, J6Button2, J6Button3);
+        return root;
+    }
 
+    @Override
+    public void start(Stage stage) {
 
-        HBox root1 = new HBox(J1Button, J1TextField, J1ComboBox);
-        HBox root2 = new HBox(J2Button1, J2TextField, J2Button2);
-        HBox root3 = new HBox(J3TextField, J3Button, J3RadioButton1, J3RadioButton2, J3RadioButton3);
-        HBox root4 = new HBox(J4TextField, J4Button, J4CheckBox1, J4CheckBox2, J4CheckBox3);
-        HBox root5 = new HBox(J5TextField, J5Button1, J5Button2, J5Button3, J5Table);
-        HBox root6 = new HBox(J6TextField, J6Button1, J6Button2, J6Button3);
-        VBox root = new VBox (root1, root2, root3, root4, root5, root6);
+        VBox root = new VBox (root1(), root2(), root3(), root4(), root5(), root6());
         Scene scene = new Scene(root);
         stage.setScene(scene);
 
